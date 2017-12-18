@@ -38,10 +38,10 @@ variables:
 # are removed.
 .git_clean_stale_submodules:  &git_clean_stale_submodules >
   find . -name '.git' -not -path './.git' -printf '%P\n'
-  | sed 's|/.git||' 
+  | sed 's|/.git||'
   | xargs -I {} sh -c '
-  grep -q {} .gitmodules 
-  ||  (echo "Removing {}, has .git directory but not in .gitmodules file" 
+  grep -q {} .gitmodules
+  ||  (echo "Removing {}, has .git directory but not in .gitmodules file"
   && rm -rf {});'
 
 # before each job, we need to check if this job is filtered by bot stage/job filter
@@ -701,6 +701,18 @@ example_test_002_01:
     - ESP32
     - Example_ShieldBox
 
+example_test_003_01:
+  <<: *example_test_template
+  tags:
+    - ESP32
+    - Example_SDIO
+
+example_test_004_01:
+  <<: *example_test_template
+  tags:
+    - ESP32
+    - Example_CAN
+
 UT_001_01:
   <<: *unit_test_template
   tags:
@@ -850,7 +862,7 @@ UT_001_25:
   tags:
     - ESP32_IDF
     - UT_T1_1
-    
+
 UT_001_26:
   <<: *unit_test_template
   tags:
@@ -986,7 +998,7 @@ UT_004_10:
     - ESP32_IDF
     - UT_T1_1
     - psram
-    
+
 UT_005_01:
   <<: *unit_test_template
   tags:
